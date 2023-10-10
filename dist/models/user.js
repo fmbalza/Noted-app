@@ -22,10 +22,26 @@ const userSchema = new mongoose_1.Schema({
         lowercase: true,
         trim: true
     },
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true
+    },
     password: ({
         type: String,
         required: true
-    })
+    }),
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    lastname: {
+        type: String,
+        required: true,
+        trim: true
+    }
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
