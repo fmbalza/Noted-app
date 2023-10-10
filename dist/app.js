@@ -10,6 +10,8 @@ const passport_1 = __importDefault(require("passport"));
 const passport_2 = __importDefault(require("./middlewares/passport"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const private_routes_1 = __importDefault(require("./routes/private.routes"));
+const notes_routes_1 = __importDefault(require("./routes/notes.routes"));
+const folder_routes_1 = __importDefault(require("./routes/folder.routes"));
 //inicio
 const app = (0, express_1.default)();
 //configuraciones
@@ -27,4 +29,6 @@ app.get('/', (req, res) => {
 });
 app.use(auth_routes_1.default);
 app.use(private_routes_1.default);
+app.use(notes_routes_1.default);
+app.use(folder_routes_1.default);
 exports.default = app;

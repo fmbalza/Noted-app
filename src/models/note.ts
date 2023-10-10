@@ -6,8 +6,8 @@ import { IFolder } from './folder';
 export interface INote extends Document {
     title: string;
     content: string;
-    user: IUser['_id'];
-    folder: IFolder['_id'] | null;
+    userID: IUser['_id'];
+    folderID: null | IFolder['_id'];
 }
 
 // definir el esquema de la nota

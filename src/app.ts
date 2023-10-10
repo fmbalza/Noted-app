@@ -5,9 +5,11 @@
  import passportMiddleware from './middlewares/passport';
  import authRoutes from './routes/auth.routes'
  import specialRoutes   from './routes/private.routes'
+ import noteRoutes from './routes/notes.routes'
+ import folderRoutes from './routes/folder.routes'
+
  //inicio
  const app =  express();
-
 
  //configuraciones
 app.set('port', process.env.PORT || 3000);
@@ -27,5 +29,7 @@ app.get('/', (req, res) => {
 
 app.use(authRoutes);
 app.use(specialRoutes);
+app.use(noteRoutes);
+app.use(folderRoutes);
 
  export default app;

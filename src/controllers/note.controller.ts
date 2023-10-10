@@ -2,20 +2,26 @@ import { Request, Response } from "express";
 import Note, { INote } from "../models/note";
 
 // crear una nota
-export const createNote = async (req: Request, res: Response) => {
+export const createNote = async (req: Request, res: Response):Promise<Response> => {
+  let i = 0;
+  console.log(i);
   try {
     const { title, content, userID, folderID } = req.body;
+    console.log(userID);
     const newNote = new Note({
-      title,
-      content,
-      userID,
-      folderID: folderID === "" ? null : folderID,
+      title: title,
+      content: content,
+      userID: userID,
+      folderID: folderID === "" ? null : folderID, // si folderID es vacio, se guarda null
     });
+    console.log(newNote);
     const noteSaved = await newNote.save();
+    console.log(i++);
     return res.status(201).json(noteSaved);
   } catch (error) {
     res.status(500).json({ error: "Error creating the note" });
   }
+  return res.status(201).json({ message: "Note Saved" });
 };
 
 // obtener todas las notas de un usuario
