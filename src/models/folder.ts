@@ -18,6 +18,10 @@ const folderSchema = new Schema({
         ref: 'User',
         required: true
     },
+},
+{
+    versionKey: false,
+    timestamps: true
 });
 
 export default model<IFolder>('Folder', folderSchema);

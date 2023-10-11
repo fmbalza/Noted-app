@@ -33,9 +33,8 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(201).json(noteSaved);
     }
     catch (error) {
-        res.status(500).json({ error: "Error creating the note" });
+        return res.status(500).json({ error: "Error creating the note", e: error });
     }
-    return res.status(201).json({ message: "Note Saved" });
 });
 exports.createNote = createNote;
 // obtener todas las notas de un usuario

@@ -23,6 +23,9 @@ const noteSchema = new mongoose_1.Schema({
         ref: 'Folder',
         required: false
     }
+}, {
+    versionKey: false,
+    timestamps: true
 });
 // exportar el modelo de la nota
 exports.default = (0, mongoose_1.model)('Note', noteSchema);

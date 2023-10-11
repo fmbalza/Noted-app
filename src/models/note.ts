@@ -32,6 +32,10 @@ const noteSchema = new Schema({
         ref: 'Folder',
         required: false
     }
+},
+{
+    versionKey: false,
+    timestamps: true
 });
 
 // exportar el modelo de la nota

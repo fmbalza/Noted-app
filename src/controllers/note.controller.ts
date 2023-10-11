@@ -19,9 +19,9 @@ export const createNote = async (req: Request, res: Response):Promise<Response> 
     console.log(i++);
     return res.status(201).json(noteSaved);
   } catch (error) {
-    res.status(500).json({ error: "Error creating the note" });
+    return res.status(500).json({ error: "Error creating the note", e: error });
   }
-  return res.status(201).json({ message: "Note Saved" });
+  
 };
 
 // obtener todas las notas de un usuario

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import config from "./config/config";
 
 
-mongoose.connect(config.DB.URI);
+mongoose.connect("mongodb+srv://keki:keki@cluster0.bgkv4c6.mongodb.net/?retryWrites=true&w=majority");
 
 const connection = mongoose.connection;
 

@@ -33,6 +33,27 @@ export const getFolders = async (req: Request, res: Response) => {
     }
 }
 
+// obtener todas las notas de una carpeta
+export const getFolderNotes = async (req: Request, res: Response) => {
+  let i = 0;
+  console.log(i);
+  try {
+      console.log(i++);
+      const {folderID} = req.params;
+      const notes = await Note.find({folderID: folderID}).sort({
+          createdAt: -1
+      });
+      if(notes){
+          res.status(200).json(notes);
+          console.log(i++);
+      }else{
+          res.status(404).json({message: 'Notes not found'});
+      }
+  } catch (error) {
+      res.status(500).json({error: 'Error getting the notes'});
+  }
+}
+
 // obtener una carpeta por su nombre
 export const getFolderByName = async (req: Request, res: Response) => {
     try {
@@ -40,21 +61,22 @@ export const getFolderByName = async (req: Request, res: Response) => {
       const folder = await Folder.findOne({ name: name });
   
       if (folder) {
-        res.json(folder);
+        res.status(200).json(folder);
       } else {
-        res.status(404).json({ error: 'Carpeta no encontrada' });
+        res.status(404).json({ error: 'Folder not found' });
       }
     } catch (error) {
-      res.status(500).json({ error: 'Error al obtener la carpeta' });
+      res.status(500).json({ error: 'Error getting the folder' });
     }
   };
+
 
 // cambiar el nombre de una carpeta
 export const updateFolder = async (req: Request, res: Response) => {
     try {
-        const {folderId} = req.params;
+        const {folderID} = req.params;
         const {name} = req.body;
-        const updatedFolder = await Folder.findByIdAndUpdate(folderId, {
+        const updatedFolder = await Folder.findByIdAndUpdate(folderID, {
             name
         });
         res.status(204).json(updatedFolder);
@@ -65,12 +87,17 @@ export const updateFolder = async (req: Request, res: Response) => {
 
 // eliminar una carpeta por su id y sus notas asociadas
 export const deleteFolder = async (req: Request, res: Response) => {
+    let i = 0;
+    console.log(i);
     try {
-        const { folderId } = req.params;
+        const { folderID } = req.params;
+        console.log(folderID);
         // Eliminar las notas asociadas a la carpeta
-        await Note.deleteMany({ folder_id: folderId });
+        await Note.deleteMany({ folderID: folderID });
+        console.log(i++);
         // Eliminar la carpeta
-        await Folder.findByIdAndDelete(folderId);
+        await Folder.findByIdAndDelete(folderID);
+        console.log(i++);
         res.sendStatus(204);
       } catch (error) {
         res.status(500).json({ error: 'Error al eliminar la carpeta' });
