@@ -38,6 +38,10 @@ const userSchema = new Schema({
         required: true,
         trim: true
     }
+},
+{
+    versionKey: false,
+    timestamps: true
 });
 
 userSchema.pre<IUser>('save', async function (next){

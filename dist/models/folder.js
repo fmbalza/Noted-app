@@ -12,5 +12,8 @@ const folderSchema = new mongoose_1.Schema({
         ref: 'User',
         required: true
     },
+}, {
+    versionKey: false,
+    timestamps: true
 });
 exports.default = (0, mongoose_1.model)('Folder', folderSchema);
