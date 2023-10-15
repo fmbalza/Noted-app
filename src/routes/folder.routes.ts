@@ -11,8 +11,8 @@ import {
 } from "../controllers/folder.controller";
 
 router.post("/folders", createFolder);
-router.get("/folders/:userID", getFolders);
-router.get("/folders/:name", getFolderByName);
+router.get("/folders/user/:userID", getFolders);
+router.get("/folders/name/:name", getFolderByName);
 router.get("/folders/:folderID", getFolderNotes);
 router.delete("/folders/:folderID", deleteFolder);
 router.put("/folders/:folderID", updateFolder);

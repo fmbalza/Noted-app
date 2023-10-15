@@ -21,13 +21,13 @@ const createFolder = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const { name, userID } = req.body;
         const newFolder = new folder_1.default({
             name,
-            userID
+            userID,
         });
         const folderSaved = yield newFolder.save();
         return res.status(201).json(folderSaved);
     }
     catch (error) {
-        res.status(500).json({ error: 'Error creating the folder' });
+        res.status(500).json({ error: "Error creating the folder" });
     }
 });
 exports.createFolder = createFolder;
@@ -35,40 +35,35 @@ exports.createFolder = createFolder;
 const getFolders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const folders = yield folder_1.default.find({ userID: req.params.userID }).sort({
-            createdAt: -1
+            createdAt: -1,
         });
         if (folders) {
             res.status(200).json(folders);
         }
         else {
-            res.status(404).json({ message: 'Folders not found' });
+            res.status(404).json({ message: "Folders not found" });
         }
     }
     catch (error) {
-        res.status(500).json({ error: 'Error getting the folders' });
+        res.status(500).json({ error: "Error getting the folders" });
     }
 });
 exports.getFolders = getFolders;
 // obtener todas las notas de una carpeta
 const getFolderNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let i = 0;
-    console.log(i);
     try {
-        console.log(i++);
-        const { folderID } = req.params;
-        const notes = yield note_1.default.find({ folderID: folderID }).sort({
-            createdAt: -1
+        const notes = yield note_1.default.find({ folderID: req.params.folderID }).sort({
+            createdAt: -1,
         });
         if (notes) {
             res.status(200).json(notes);
-            console.log(i++);
         }
         else {
-            res.status(404).json({ message: 'Notes not found' });
+            res.status(404).json({ message: "Notes not found" });
         }
     }
     catch (error) {
-        res.status(500).json({ error: 'Error getting the notes' });
+        res.status(500).json({ error: "Error getting the notes" });
     }
 });
 exports.getFolderNotes = getFolderNotes;
@@ -81,11 +76,11 @@ const getFolderByName = (req, res) => __awaiter(void 0, void 0, void 0, function
             res.status(200).json(folder);
         }
         else {
-            res.status(404).json({ error: 'Folder not found' });
+            res.status(404).json({ error: "Folder not found" });
         }
     }
     catch (error) {
-        res.status(500).json({ error: 'Error getting the folder' });
+        res.status(500).json({ error: "Error getting the folder" });
     }
 });
 exports.getFolderByName = getFolderByName;
@@ -95,12 +90,12 @@ const updateFolder = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const { folderID } = req.params;
         const { name } = req.body;
         const updatedFolder = yield folder_1.default.findByIdAndUpdate(folderID, {
-            name
+            name,
         });
         res.status(204).json(updatedFolder);
     }
     catch (error) {
-        res.status(500).json({ error: 'Error updating the folder' });
+        res.status(500).json({ error: "Error updating the folder" });
     }
 });
 exports.updateFolder = updateFolder;
@@ -120,7 +115,7 @@ const deleteFolder = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.sendStatus(204);
     }
     catch (error) {
-        res.status(500).json({ error: 'Error al eliminar la carpeta' });
+        res.status(500).json({ error: "Error al eliminar la carpeta" });
     }
 });
 exports.deleteFolder = deleteFolder;
