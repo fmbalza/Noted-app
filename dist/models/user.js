@@ -15,6 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const userSchema = new mongoose_1.Schema({
+    name: {
+        type: String,
+        unique: true,
+        required: true,
+        lowercase: true,
+        trim: true
+    },
+    lastname: {
+        type: String,
+        unique: true,
+        required: true,
+        lowercase: true,
+        trim: true
+    },
     email: {
         type: String,
         unique: true,
@@ -22,10 +36,20 @@ const userSchema = new mongoose_1.Schema({
         lowercase: true,
         trim: true
     },
-    password: ({
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        lowercase: true,
+        trim: true
+    },
+    password: {
         type: String,
         required: true
-    })
+    },
+}, {
+    timestamps: true,
+    versionKey: false
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {

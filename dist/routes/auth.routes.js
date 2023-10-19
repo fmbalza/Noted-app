@@ -5,4 +5,6 @@ const router = (0, express_1.Router)();
 const user_controller_1 = require("../controllers/user.controller");
 router.post('/signup', user_controller_1.signUp);
 router.post('/signin', user_controller_1.signIn);
+router.post('/changeUsername', user_controller_1.changeUsername);
+router.post('/changePassword', user_controller_1.changePassword);
 exports.default = router;
