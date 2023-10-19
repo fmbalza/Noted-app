@@ -12,7 +12,6 @@
  //inicio
  const app =  express();
 
-
  //configuraciones
 app.set('port', process.env.PORT || 3000);
 
