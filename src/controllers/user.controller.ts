@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { Request, Response, response } from "express"
 import User, {IUser} from "../models/user"
 import jwt from "jsonwebtoken"
 import config from '../config/config'
@@ -28,24 +28,32 @@ export const signUp = async (req: Request, res: Response): Promise<Response> => 
 }
 
 export const signIn = async (req: Request, res: Response) => {
-    console.log(req.body)
-    if(!req.body.username || !req.body.password){
-        return res.status(400).json({msg:'Plase. Send your user and password'})
-    }
-    const user = await User.findOne({username: req.body.username})
-    if(!user){
-        return res.status(400).json({msg:'The user does not exist'})
-    }
+  if (!req.body.email && !req.body.username || !req.body.password) {
+    return res.status(400).json({ msg: 'Please send your email/username and password' });
+  }
 
-    const isMatch = await user.comparePassword(req.body.password)
-    if (isMatch){
-        return res.status(200).json({token: createToken(user)})
-    }
+  let user;
+  if (req.body.email) {
+    user = await User.findOne({ email: req.body.email });
+  } else if (req.body.username) {
+    user = await User.findOne({ username: req.body.username });
+  }
 
-    return res.status(400).json({
-        msg:'The user or password are incorrect'
-    });
-}
+  if (!user) {
+    return res.status(400).json({ msg: 'The user does not exist' });
+  }
+
+  const isMatch = await user.comparePassword(req.body.password);
+  if (isMatch) {
+    const token = createToken(user);
+    const userID = user._id; // Obtener el userID del usuario
+    return res.status(200).json({ token, userID });
+  }
+
+  return res.status(400).json({
+    msg: 'The email/username or password are incorrect',
+  });
+};
 
 export const changePassword = async (req: Request, res: Response): Promise<Response> => {
     const { email, currentPassword, newPassword } = req.body;

@@ -36,20 +36,27 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.signUp = signUp;
 const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
-    if (!req.body.username || !req.body.password) {
-        return res.status(400).json({ msg: 'Plase. Send your user and password' });
+    if (!req.body.email && !req.body.username || !req.body.password) {
+        return res.status(400).json({ msg: 'Please send your email/username and password' });
     }
-    const user = yield user_1.default.findOne({ username: req.body.username });
+    let user;
+    if (req.body.email) {
+        user = yield user_1.default.findOne({ email: req.body.email });
+    }
+    else if (req.body.username) {
+        user = yield user_1.default.findOne({ username: req.body.username });
+    }
     if (!user) {
         return res.status(400).json({ msg: 'The user does not exist' });
     }
     const isMatch = yield user.comparePassword(req.body.password);
     if (isMatch) {
-        return res.status(200).json({ token: createToken(user) });
+        const token = createToken(user);
+        const userID = user._id; // Obtener el userID del usuario
+        return res.status(200).json({ token, userID });
     }
     return res.status(400).json({
-        msg: 'The user or password are incorrect'
+        msg: 'The email/username or password are incorrect',
     });
 });
 exports.signIn = signIn;
